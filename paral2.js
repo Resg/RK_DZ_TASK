@@ -4,13 +4,15 @@
 function parallel(functions, result) {
     const arr = [];
     arr.length = 3;
-    new Promise(functions[0]).then((resolve) => {
-        arr[0] = resolve
-    });
+    const resolve0 = (val) =>{
+        arr[0] = val;
+    };
+    const resolve2 = (val) =>{
+        arr[2] = val;
+    };
+    functions[0](resolve0);
     arr[1] = functions[1]();
-    new Promise(functions[2]).then((resolve)=> {
-        arr[2] = resolve;
-    });
+    functions[2](resolve2);
     const handler = ()=>{
         if ((arr[0] !== undefined) && (arr[1] !==undefined) && (arr[2] !==undefined)) {
             result(arr);
