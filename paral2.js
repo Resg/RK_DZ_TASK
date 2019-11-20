@@ -3,18 +3,27 @@
 
 function parallel(functions, result) {
     const arr = [];
-    arr.length = 3;
-    const resolve0 = (val) =>{
-        arr[0] = val;
-    };
-    const resolve2 = (val) =>{
-        arr[2] = val;
-    };
-    functions[0](resolve0);
-    arr[1] = functions[1]();
-    functions[2](resolve2);
+    arr.length = functions.length;
+    for (let i = 0; i < functions.length; i++){
+        const resolve = (val) =>{
+            arr[i] = val;
+        };
+        if (functions[i](resolve)){
+            arr[i] = functions[i]();
+        }else {
+            arr[i] = undefined;
+            functions[i](resolve);
+        }
+    }
+
     const handler = ()=>{
-        if ((arr[0] !== undefined) && (arr[1] !==undefined) && (arr[2] !==undefined)) {
+        let flag = true;
+        arr.forEach((value)=>{
+            if (value === undefined){
+                flag = false;
+            }
+        });
+        if (flag) {
             result(arr);
         } else {
             setTimeout(handler, 0);
