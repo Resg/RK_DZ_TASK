@@ -3,7 +3,7 @@
 const handler = {
     get: (target, prop)=>{
 
-        if (Number(prop)){
+        if (Number(prop)!== NaN){
             return prop*prop;
         } else {
             return 'error';
@@ -12,4 +12,4 @@ const handler = {
 };
 const object = new Proxy({}, handler);
 
-console.log(object.i123);
+console.log(object[-1]);
