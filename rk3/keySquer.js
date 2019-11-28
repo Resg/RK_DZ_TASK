@@ -2,7 +2,8 @@
 
 const handler = {
     get: (target, prop)=>{
-        if (parseInt(prop)){
+
+        if (Number(prop)){
             return prop*prop;
         } else {
             return 'error';
@@ -10,3 +11,5 @@ const handler = {
     }
 };
 const object = new Proxy({}, handler);
+
+console.log(object.i123);

@@ -4,7 +4,7 @@
 
 class Foo {
     get name() {
-        return this.constructor.name.toString();
+        return this.constructor.name;
     }
 }
 class Bar extends Foo {
